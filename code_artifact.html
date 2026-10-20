@@ -143,6 +143,7 @@
     transform: scale(0.98);
   }
 
+  /* تم إنزال أزرار القائمة الرئيسية للأسفل أكثر */
   .main-menu {
     display: flex;
     flex-direction: column;
@@ -151,7 +152,7 @@
     width: 100%;
     max-width: 480px;
     z-index: 1;
-    margin-top: 20px;
+    margin-top: 45px; /* تم زيادتها هنا لإنزال الأزرار أكثر */
     animation: fadeInMenu 0.5s ease-in-out;
   }
 
@@ -180,7 +181,7 @@
   .btn-exit { background-color: #505050; color: #E5E4DF; }
   .btn-exit:hover { background-color: #3e3e3e; transform: translateY(-2px); }
 
-  /* تم إنزال بطاقة التخصيص أكثر لأسفل الشاشة بمسافة مناسبة */
+  /* بطاقة التخصيص المنبثقة */
   .customization-card {
     display: none;
     position: relative;
@@ -249,7 +250,7 @@
   }
 
   .round-option {
-    background-color: var(--gray-bar); color: #E5E4DF; padding: 22px 10px; border-radius: 10px;
+    background-color: var(--gray-bar); color: #E5E4DF; padding: 40px 10px; border-radius: 10px;
     text-align: center; font-size: 1.15rem; font-weight: bold; cursor: pointer;
     border: 2px solid transparent; display: flex; align-items: center; justify-content: center;
   }
@@ -663,7 +664,7 @@
     <button class="menu-btn btn-exit" onclick="goToGamesPage()">خروج</button>
   </div>
 
-  <!-- بطاقة التخصيص المنبثقة المنزلة للأسفل أكثر -->
+  <!-- بطاقة التخصيص المنبثقة -->
   <div class="customization-card" id="customizationCard">
     <div class="card-grid">
       <div class="side-box-blue">
