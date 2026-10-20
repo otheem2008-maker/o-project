@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>حروف مع عثمان</title>
+<style>
+  @font-face {
+    font-family: 'graphic';
+    src: url('graphic-school.woff');
+  }
+
+  @font-face {
+    font-family: 'Azahar';
+    src: url('alfont_com_29lt-azahar-display-al-tn-trial-black.woff') format('woff');
+  }
+
+  :root {
+    --custom-font: 'Cairo', sans-serif;
+    --bg-color: #3b5262;
+    --btn-orange: #e07a5f;
+    --btn-white: #E5E4DF;
+    --text-color: #E5E4DF;
+    --card-bg: #E5E4DF;
+    --team-blue: #5b82a6;
+    --team-orange: #e07a5f;
+    --gray-bar: #505050;
+    --dark-box: #2c2c2c;
+    --border-radius-standard: 16px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'graphic', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::-webkit-scrollbar { display: none; }
+  * { -ms-overflow-style: none; scrollbar-width: none; }
+
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+  }
+
+  .animated-background {
+    position: fixed;
+    top: -5%;
+    left: -5%;
+    width: 110%;
+    height: 110%;
+    background-image: url('background-image.PNG');
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    animation: smoothContinuousMotion 5s ease-in-out infinite;
+    filter: brightness(0.92);
+    transform: translateZ(0);
+  }
+
+  @keyframes smoothContinuousMotion {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(10px, -10px); }
+    50% { transform: translate(0px, -15px); }
+    75% { transform: translate(-10px, -10px); }
+    100% { transform: translate(0px, 0px); }
+  }
+
+  .intro-screen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(59, 82, 98, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 9999;
+    cursor: pointer;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+
+  .intro-screen.fade-out {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .intro-logo, .logo-container {
+    text-align: center;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+  }
+
+  .intro-logo {
+    animation: introLogoAnimation 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .logo-container {
+    position: absolute;
+    top: 10vh;
+  }
+
+  @keyframes introLogoAnimation {
+    0% { opacity: 0; transform: scale(0.85) translateY(30px); filter: blur(8px); }
+    100% { opacity: 1; transform: scale(1) translateY(0px); filter: blur(0px); }
+  }
+
+  .logo-row-1 { color: #e07a5f; font-size: 3.8rem; font-weight: 900; margin-bottom: 20px; text-shadow: 0px 4px 6px rgba(0,0,0,0.25); }
+  .logo-row-2 { color: #5b82a6; font-size: 2.5rem; font-weight: 900; text-shadow: 0px 4px 6px rgba(0,0,0,0.25); margin-top: -10px; }
+  .logo-row-3 { color: #E5E4DF; font-size: 4.2rem; font-weight: 900; text-shadow: 0px 4px 6px rgba(0,0,0,0.25); margin-top: 0px; }
+
+  .clickable-logo {
+    cursor: pointer;
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+  .clickable-logo:hover {
+    transform: scale(1.05);
+    filter: brightness(1.15);
+  }
+  .clickable-logo:active {
+    transform: scale(0.98);
+  }
+
+  .main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 480px;
+    z-index: 1;
+    margin-top: 280px;
+    animation: fadeInMenu 0.5s ease-in-out;
+  }
+
+  @keyframes fadeInMenu {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .menu-btn {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    text-align: center;
+  }
+
+  .btn-start { background-color: var(--btn-orange); color: #4a2c1d; }
+  .btn-start:hover { background-color: #cc6a50; transform: translateY(-2px); }
+  .btn-customize { background-color: var(--btn-white); color: #444038; }
+  .btn-customize:hover { background-color: #E5E4DF; transform: translateY(-2px); }
+  .btn-exit { background-color: #505050; color: #E5E4DF; }
+  .btn-exit:hover { background-color: #3e3e3e; transform: translateY(-2px); }
+
+  .customization-card {
+    display: none;
+    position: absolute;
+    top: 38vh; 
+    background-color: var(--card-bg);
+    width: 100%;
+    max-width: 860px;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0px 10px 30px rgba(0,0,0,0.3);
+    z-index: 10;
+    animation: fadeInMenu 0.4s ease-in-out;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: 150px 1fr 1fr 150px;
+    grid-template-rows: auto auto auto;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .side-box-blue {
+    grid-column: 1 / 2; grid-row: 1 / 4;
+    background-color: var(--team-blue);
+    border-radius: 12px; padding: 10px;
+    display: flex; flex-direction: column; align-items: center;
+    height: 310px; overflow-y: auto;
+  }
+
+  .side-box-orange {
+    grid-column: 4 / 5; grid-row: 1 / 4;
+    background-color: var(--team-orange);
+    border-radius: 12px; padding: 10px;
+    display: flex; flex-direction: column; align-items: center;
+    height: 310px; overflow-y: auto;
+  }
+
+  .team-avatars-container {
+    display: flex; flex-direction: column; gap: 10px; align-items: center; width: 100%; margin-top: 5px;
+  }
+
+  .mini-avatar-slot {
+    width: 65px; height: 65px; border-radius: 50%; background: transparent;
+    overflow: hidden; border: 2px solid rgba(255,255,255,0.9);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2); flex-shrink: 0; cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .mini-avatar-slot:hover { transform: scale(1.08); border-color: #E5E4DF; }
+  .mini-avatar-slot img { width: 100%; height: 100%; object-fit: cover; }
+
+  .team-input-blue, .team-input-orange {
+    padding: 18px; border-radius: 10px; text-align: center;
+    font-size: 1.1rem; font-weight: bold; border: none; outline: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); width: 100%; color: #E5E4DF;
+  }
+  .team-input-blue { grid-column: 2 / 3; grid-row: 1 / 2; background-color: var(--team-blue); }
+  .team-input-orange { grid-column: 3 / 4; grid-row: 1 / 2; background-color: var(--team-orange); }
+
+  .rounds-container {
+    grid-column: 2 / 4; grid-row: 2 / 3;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;
+  }
+
+  .round-option {
+    background-color: var(--gray-bar); color: #E5E4DF; padding: 35px; border-radius: 10px;
+    text-align: center; font-size: 1.4rem; font-weight: bold; cursor: pointer;
+    border: 2px solid transparent; display: flex; align-items: center; justify-content: center;
+  }
+  .round-option.active { background-color: #2c2c2c; border-color: #E5E4DF; }
+
+  .bottom-gray-bar {
+    grid-column: 2 / 4; grid-row: 3 / 4;
+    background-color: var(--gray-bar); border-radius: 10px; padding: 10px 15px;
+    display: flex; align-items: center; justify-content: space-between; gap: 15px; min-height: 75px;
+  }
+
+  .random-box {
+    width: 55px; height: 55px; background-color: var(--dark-box); border-radius: 8px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .random-box svg { width: 26px; height: 26px; fill: #E5E4DF; }
+
+  .characters-scroll {
+    display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; flex-grow: 1; align-items: center;
+  }
+
+  .char-item {
+    width: 55px; height: 55px; border-radius: 50%; position: relative; cursor: pointer; flex-shrink: 0; overflow: hidden;
+  }
+  .char-item img { width: 100%; height: 100%; object-fit: cover; }
+  .char-item.selected::after {
+    content: '✓'; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(46, 204, 113, 0.85); color: #E5E4DF; font-size: 1.5rem;
+    font-weight: bold; display: flex; align-items: center; justify-content: center; border-radius: 50%;
+  }
+
+  .close-card-btn {
+    display: block; margin: 15px auto 0 auto; background-color: var(--btn-orange); color: #E5E4DF;
+    border: none; padding: 10px 30px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; font-weight: bold;
+  }
+  .close-card-btn:hover { background-color: #cc6a50; }
+
+  /* واجهة اللعبة السداسية */
+  .game-container {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    gap: 8px;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .board-wrap {
+    position: relative;
+    background-color: #262624;
+    background-image: url(BQDG1067.PNG);
+    background-size: 220% 130%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+    overflow: hidden;
+    border-radius: var(--border-radius-standard);
+  }
+
+  .hex-grid-manual {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 84px);
+    grid-template-rows: repeat(5, 88px);
+    gap: 10px 20px;
+    transform: translate(17px, -20px) scale(0.92);
+    transform-origin: center center;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.6s ease;
+  }
+
+  .hex-grid-manual.visible {
+    opacity: 1;
+  }
+
+  .hex-cell {
+    position: absolute;
+    width: 172px;
+    height: 132px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent; 
+    user-select: none; 
+    filter: brightness(0.85);
+    touch-action: manipulation;
+    opacity: 0;
+    transform: scale(0.3) translateY(20px);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  }
+
+  .hex-cell.show {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .hex-cell svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
+  .hex-bg {
+    fill: #E5E4DF;
+    stroke: #283C49;
+    stroke-width: 4px;
+    transition: fill 0.2s;
+  }
+
+  .hex-text {
+    position: relative; z-index: 2; font-size: 45px; font-weight: 900; color: #283C49; font-family: 'Azahar', sans-serif;
+  }
+
+  .hex-cell.active { filter: brightness(0.75) !important; }
+  .hex-cell.team-a { filter: brightness(1) !important; }
+  .hex-cell.team-a .hex-bg { fill: #D97757; }
+  .hex-cell.team-a .hex-text { display: none; }
+
+  .hex-cell.team-b { filter: brightness(1) !important; }
+  .hex-cell.team-b .hex-bg { fill: #5B8AA6; }
+  .hex-cell.team-b .hex-text { display: none; }
+
+  .cell-index-0  { grid-column: 1; grid-row: 1; }
+  .cell-index-1  { grid-column: 2; grid-row: 1; }
+  .cell-index-2  { grid-column: 3; grid-row: 1; }
+  .cell-index-3  { grid-column: 4; grid-row: 1; }
+  .cell-index-4  { grid-column: 5; grid-row: 1; }
+  .cell-index-5  { grid-column: 1; grid-row: 2; transform: translateX(52px); }
+  .cell-index-6  { grid-column: 2; grid-row: 2; transform: translateX(52px); }
+  .cell-index-7  { grid-column: 3; grid-row: 2; transform: translateX(52px); }
+  .cell-index-8  { grid-column: 4; grid-row: 2; transform: translateX(52px); }
+  .cell-index-9  { grid-column: 5; grid-row: 2; transform: translateX(52px); }
+  .cell-index-10 { grid-column: 1; grid-row: 3; }
+  .cell-index-11 { grid-column: 2; grid-row: 3; }
+  .cell-index-12 { grid-column: 3; grid-row: 3; }
+  .cell-index-13 { grid-column: 4; grid-row: 3; }
+  .cell-index-14 { grid-column: 5; grid-row: 3; }
+  .cell-index-15 { grid-column: 1; grid-row: 4; transform: translateX(52px); }
+  .cell-index-16 { grid-column: 2; grid-row: 4; transform: translateX(52px); }
+  .cell-index-17 { grid-column: 3; grid-row: 4; transform: translateX(52px); }
+  .cell-index-18 { grid-column: 4; grid-row: 4; transform: translateX(52px); }
+  .cell-index-19 { grid-column: 5; grid-row: 4; transform: translateX(52px); }
+  .cell-index-20 { grid-column: 1; grid-row: 5; }
+  .cell-index-21 { grid-column: 2; grid-row: 5; }
+  .cell-index-22 { grid-column: 3; grid-row: 5; }
+  .cell-index-23 { grid-column: 4; grid-row: 5; }
+  .cell-index-24 { grid-column: 5; grid-row: 5; }
+
+  .cell-index-5.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-6.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-7.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-8.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-9.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-15.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-16.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-17.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-18.show { transform: translateX(52px) scale(1) translateY(0); }
+  .cell-index-19.show { transform: translateX(52px) scale(1) translateY(0); }
+
+  .side-panel {
+    background-color: #596F7E; padding: 12px 8px; width: 120px;
+    display: flex; flex-direction: column; min-height: 550px;
+    box-sizing: border-box; position: relative; border-radius: var(--border-radius-standard);
+  }
+  
+  .round-label {  
+    font-size: 23px; font-weight: 900; color: #E5E4DF; text-align: center;
+    font-family: 'Azahar', sans-serif; height: 50px; margin-top: 5px; display: flex; align-items: center; justify-content: center;
+  }
+
+  /* شاشة الانتقال بخلفية الخطوط المتحركة */
+  .round-transition-overlay {
+    position: fixed;
+    inset: 0;
+    background: #596F7E;
+    background-image: repeating-conic-gradient(#596F7E 0deg 15deg, #4D6373 15deg 30deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 3000;
+    opacity: 0;
+    visibility: hidden;
+    overflow: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+  }
+  
+  .round-transition-overlay.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .transition-rays {
+    position: absolute;
+    top: -150%;
+    left: -150%;
+    width: 400%;
+    height: 400%;
+    background-image: repeating-conic-gradient(#596F7E 0deg 15deg, #445663 15deg 30deg);
+    animation: rotateRaysSlow 50s linear infinite;
+    z-index: 1;
+    opacity: 0.95;
+    transform: scale(1.5);
+    pointer-events: none;
+  }
+
+  @keyframes rotateRaysSlow {
+    0% { transform: rotate(0deg) scale(1.5); }
+    100% { transform: rotate(360deg) scale(1.5); }
+  }
+
+  .transition-round-name {
+    position: relative;
+    z-index: 2;
+    font-size: 6.5rem;
+    font-weight: 900;
+    color: #E5E4DF;
+    font-family: 'Azahar', sans-serif;
+    text-align: center;
+    transform: scale(0.5);
+    opacity: 0;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+  }
+
+  .round-transition-overlay.active .transition-round-name {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  .backdrop-blur-overlay {
+    position: fixed; inset: 0; backdrop-filter: blur(8px); background-color: rgba(26, 26, 24, 0.4);
+    z-index: 999; opacity: 0; pointer-events: none; transition: opacity 1.5s ease;
+  }
+  .backdrop-blur-overlay.active { opacity: 1; pointer-events: auto; }
+
+  .teams-container {
+    display: flex; flex-direction: column; gap: 15px; position: absolute; bottom: 20px; left: 8px; right: 8px;
+  }
+
+  .team-section { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+
+  .team-name-box {
+    width: 100%; height: 32px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; color: #E5E4DF; border-radius: 10px;
+  }
+  .team-name-box.team-a { background-color: #D97757; }
+  .team-name-box.team-b { background-color: #5B8AA6; }
+
+  .score-box {
+    width: 100%; height: 100px; display: flex; align-items: center; justify-content: center;
+    font-size: 55px; font-weight: 900; color: #E5E4DF; cursor: pointer;
+    box-shadow: 0 7px 18px rgba(0,0,0,0.38); border-radius: var(--border-radius-standard);
+  }
+  .score-box.team-a { background-color: #D97757; }
+  .score-box.team-b { background-color: #5B8AA6; }
+
+  /* شاشة النهاية بسلاسة تامة */
+  .round-end-banner {
+    position: fixed; inset: 0; background-color: rgba(26,26,24,0.96);
+    display: flex; align-items: center; justify-content: center; flex-direction: column; 
+    z-index: 2000; text-align: center; padding: 20px; 
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .round-end-banner.visible { opacity: 1; visibility: visible; pointer-events: auto; }
+
+  .characters-showcase {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; width: 100%; max-width: 95vw; 
+    opacity: 0;
+    transform: scale(0.92) translateY(10px);
+    transition: opacity 2s ease-in-out, transform 2s ease-in-out;
+  }
+  
+  .characters-showcase.fade-in-anim { 
+    opacity: 1; 
+    transform: scale(1) translateY(0); 
+  }
+
+  .characters-showcase.fade-out-anim { 
+    opacity: 0; 
+    transform: scale(0.92) translateY(10px); 
+  }
+
+  /* صف الشخصيات: مسافات متوحدة وتداخل منتظم */
+  .row-winners { 
+    display: flex; 
+    align-items: flex-end; 
+    justify-content: center; 
+    width: 100%; 
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow: visible;
+    padding: 0 20px;
+    gap: -40px; 
+  }
+
+  .character-item { 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    z-index: 2; 
+    flex: 0 1 auto;
+    transition: transform 0.3s ease;
+    margin: 0 -35px; 
+  }
+
+  .character-item img { 
+    border-radius: 0; 
+    object-fit: contain; 
+    filter: drop-shadow(0 25px 35px rgba(0,0,0,0.8)); 
+    width: clamp(200px, 26vw, 440px); 
+    height: clamp(200px, 26vw, 440px); 
+    max-width: 100%;
+  }
+
+  .character-item.center-char {
+    transform: translateY(-15px) scale(1.10);
+    z-index: 10;
+  }
+
+  .character-item.side-char {
+    transform: translateY(10px) scale(0.95);
+    z-index: 5;
+  }
+  
+  .character-item.edge-char {
+    transform: translateY(25px) scale(0.90);
+    z-index: 2;
+  }
+
+  .team-winner-title {
+    font-size: 70px; 
+    font-weight: 900; 
+    color: #E5E4DF; 
+    font-family: 'Azahar', sans-serif;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.7); 
+    margin-top: -20px; 
+    position: relative;
+    z-index: 15;
+  }
+
+  .next-round-btn, .extra-action-btn {
+    position: absolute; bottom: 35px; background-color: #30302E; color: #E5E4DF; border: none; 
+    padding: 12px 35px; font-size: 17px; font-weight: 700; font-family: inherit; border-radius: var(--border-radius-standard); cursor: pointer; z-index: 10;
+  }
+  .next-round-btn { left: 45px; }
+  .extra-action-btn { right: 45px; }
+
+  @keyframes winGlow {
+    0% { filter: brightness(1); stroke: #262624; stroke-width: 2.2px; }
+    50% { filter: brightness(1.25); stroke: #E5E4DF; stroke-width: 4px; }
+    100% { filter: brightness(1); stroke: #262624; stroke-width: 2.2px; }
+  }
+  .hex-cell.winning-glow { z-index: 50 !important; }
+  .hex-cell.winning-glow .hex-bg { animation: winGlow 0.6s ease-in-out infinite; }
+</style>
+</head>
+<body>
+
+  <div class="animated-background"></div>
+
+  <audio id="bgMusic" preload="auto">
+    <source src="music.mp3" type="audio/mp3">
+  </audio>
+
+  <audio id="transitionSound" preload="auto">
+    <source src="transition-sound.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- صوت تلوين الخلية -->
+  <audio id="cellColorSound" preload="auto">
+    <source src="cell-sound.mp3" type="audio/mp3">
+  </audio>
+
+  <audio id="winSound" preload="auto">
+    <source src="win-sound.mp3" type="audio/mp3">
+  </audio>
+
+  <div id="preloadContainer" style="display:none;"></div>
+
+  <!-- شاشة الانتقال بخلفية الخطوط المتحركة -->
+  <div class="round-transition-overlay" id="roundTransitionOverlay">
+    <div class="transition-rays"></div>
+    <div class="transition-round-name" id="transitionRoundName">الجولة الأولى</div>
+  </div>
+
+  <!-- شاشة الدخول الترحيبية -->
+  <div class="intro-screen" id="introScreen" onclick="enterGame()">
+    <div class="intro-logo">
+      <div class="logo-row-1">حروف</div>
+      <div class="logo-row-2">مـــع</div>
+      <div class="logo-row-3">عثمان</div>
+    </div>
+  </div>
+
+  <!-- القائمة الرئيسية -->
+  <div class="logo-container" id="logoContainer">
+    <a href="index.html" class="logo-row-1 clickable-logo" style="text-decoration: none;">حروف</a>
+    <div class="logo-row-2">مـــع</div>
+    <div class="logo-row-3">عثمان</div>
+  </div>
+
+  <div class="main-menu" id="mainMenu">
+    <button class="menu-btn btn-start" onclick="startGame()">بدء اللعبة</button>
+    <button class="menu-btn btn-customize" onclick="toggleCustomize()">تخصيص اللعبة</button>
+    <button class="menu-btn btn-exit" onclick="goToGamesPage()">خروج</button>
+  </div>
+
+  <!-- بطاقة التخصيص المنبثقة -->
+  <div class="customization-card" id="customizationCard">
+    <div class="card-grid">
+      <div class="side-box-blue">
+        <div class="team-avatars-container" id="blueTeamBox"></div>
+      </div>
+
+      <input type="text" class="team-input-blue" id="blueTeamInput" value="الفريق الأول" 
+             onfocus="if(this.value=='الفريق الأول') this.value='';" 
+             onblur="if(this.value=='') this.value='الفريق الأول';">
+      
+      <input type="text" class="team-input-orange" id="orangeTeamInput" value="الفريق الثاني" 
+             onfocus="if(this.value=='الفريق الثاني') this.value='';" 
+             onblur="if(this.value=='') this.value='الفريق الثاني';">
+
+      <div class="rounds-container">
+        <div class="round-option" id="round1" onclick="selectRound(1)">جولة حاسمة</div>
+        <div class="round-option" id="round2" onclick="selectRound(2)">جولتين</div>
+        <div class="round-option active" id="round3" onclick="selectRound(3)">ثلاث جولات</div>
+      </div>
+
+      <div class="side-box-orange">
+        <div class="team-avatars-container" id="orangeTeamBox"></div>
+      </div>
+
+      <div class="bottom-gray-bar">
+        <div class="characters-scroll" id="charactersScroll"></div>
+        <div class="random-box" onclick="randomizeSelectedTeams()" title="توزيع الشخصيات المُختارة عشوائياً">
+          <svg viewBox="0 0 24 24">
+            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-8 14H9v-2h2v2zm0-4H9v-2h2v2zm0-4H9V7h2v2zm4 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+    <button class="close-card-btn" onclick="toggleCustomize()">إغلاق التخصيص</button>
+  </div>
+
+  <!-- حاوية اللعبة السداسية -->
+  <div class="game-container" id="gameContainer">
+    <div class="backdrop-blur-overlay" id="blurOverlay"></div>
+    <div class="board-wrap">
+      <div class="hex-grid-manual" id="hexGridManual"></div>
+    </div>
+    <div class="side-panel">
+      <div class="round-label" id="roundLabel">الجولة الأولى</div>
+      <div class="teams-container">
+        <div class="team-section">
+          <div class="team-name-box team-a" id="titleTeamA">الفريق الأول</div>
+          <div class="score-box team-a disabled" id="scoreA">0</div>
+        </div>
+        <div class="team-section">
+          <div class="team-name-box team-b" id="titleTeamB">الفريق الثاني</div>
+          <div class="score-box team-b disabled" id="scoreB">0</div>
+        </div>
+      </div>
+    </div>
+    <div class="round-end-banner" id="roundEndBanner">
+      <div class="characters-showcase" id="charactersShowcase">
+        <div class="row-winners" id="winnersRow"></div>
+        <div class="team-winner-title" id="teamWinnerTitle"></div>
+      </div>
+      <button class="next-round-btn" onclick="handleNextAction()">عودة</button>
+      <button class="extra-action-btn" onclick="goToGamesPage()">خروج</button>
+    </div>
+  </div>
+
+<script>
+  const music = document.getElementById('bgMusic');
+  const transitionSound = document.getElementById('transitionSound');
+  const cellColorSound = document.getElementById('cellColorSound');
+  const winSound = document.getElementById('winSound');
+
+  [music, transitionSound, cellColorSound, winSound].forEach(s => {
+    if(s) {
+      s.load();
+      s.muted = false;
+    }
+  });
+
+  function playCellSound() {
+    if (cellColorSound) {
+      const clone = cellColorSound.cloneNode(true);
+      clone.volume = cellColorSound.volume;
+      clone.play().catch(error => console.log("تعذر تشغيل صوت الخلية:", error));
+    }
+  }
+
+  function enterGame() {
+    [music, transitionSound, cellColorSound, winSound].forEach(s => {
+      if(s) {
+        s.play().then(() => {
+          s.pause();
+          s.currentTime = 0;
+        }).catch(e => {});
+      }
+    });
+
+    music.currentTime = 0;
+    music.play().catch(error => console.log("تعذر تشغيل الموسيقى:", error));
+    
+    const intro = document.getElementById('introScreen');
+    intro.classList.add('fade-out');
+    setTimeout(() => { intro.style.display = 'none'; }, 800);
+  }
+
+  function goToGamesPage() {
+    window.location.href = 'index.html';
+  }
+
+  const characters = [
+    { id: 1, baseImg: 'char1.PNG', winImg: 'char1-win.PNG', loseImg: 'char1-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 2, baseImg: 'char2.PNG', winImg: 'char2-win.PNG', loseImg: 'char2-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 3, baseImg: 'char3.PNG', winImg: 'char3-win.PNG', loseImg: 'char3-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 4, baseImg: 'char4.PNG', winImg: 'char4-win.PNG', loseImg: 'char4-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 5, baseImg: 'char5.PNG', winImg: 'char5-win.PNG', loseImg: 'char5-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 6, baseImg: 'char6.PNG', winImg: 'char6-win.PNG', loseImg: 'char6-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 7, baseImg: 'char7.PNG', winImg: 'char7-win.PNG', loseImg: 'char7-lose.PNG', assignedTeam: null, selectedManually: false },
+    { id: 8, baseImg: 'char8.PNG', winImg: 'char8-win.PNG', loseImg: 'char8-lose.PNG', assignedTeam: null, selectedManually: false }
+  ];
+
+  const preloadBox = document.getElementById('preloadContainer');
+  characters.forEach(char => {
+    [char.baseImg, char.winImg, char.loseImg].forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      preloadBox.appendChild(img);
+    });
+  });
+
+  let selectedRounds = 3;
+  let isCustomizing = false;
+
+  function toggleCustomize() {
+    isCustomizing = !isCustomizing;
+    const card = document.getElementById('customizationCard');
+    const menu = document.getElementById('mainMenu');
+    const logo = document.getElementById('logoContainer');
+
+    if (isCustomizing) {
+      card.style.display = 'block';
+      menu.style.display = 'none';
+      logo.style.display = 'flex'; 
+      renderCharacters();
+      updateTeamsDisplay();
+    } else {
+      card.style.display = 'none';
+      menu.style.display = 'flex';
+      logo.style.display = 'flex';
+    }
+  }
+
+  function selectRound(roundsCount) {
+    selectedRounds = roundsCount;
+    document.getElementById('round1').classList.remove('active');
+    document.getElementById('round2').classList.remove('active');
+    document.getElementById('round3').classList.remove('active');
+
+    if (roundsCount === 1) document.getElementById('round1').classList.add('active');
+    if (roundsCount === 2) document.getElementById('round2').classList.add('active');
+    if (roundsCount === 3) document.getElementById('round3').classList.add('active');
+  }
+
+  function renderCharacters() {
+    const container = document.getElementById('charactersScroll');
+    container.innerHTML = '';
+    characters.forEach((char, index) => {
+      const item = document.createElement('div');
+      item.className = `char-item ${char.selectedManually ? 'selected' : ''}`;
+      item.innerHTML = `<img src="${char.baseImg}" alt="شخصية">`;
+      item.onclick = () => toggleManualCheck(index);
+      container.appendChild(item);
+    });
+  }
+
+  function toggleManualCheck(index) {
+    characters[index].selectedManually = !characters[index].selectedManually;
+    renderCharacters();
+  }
+
+  function randomizeSelectedTeams() {
+    characters.forEach(c => c.assignedTeam = null);
+    let selectedChars = characters.filter(c => c.selectedManually);
+    if (selectedChars.length === 0) {
+      alert('الرجاء اختيار شخصية واحدة على الأقل قبل التوزيع العشوائي!');
+      updateTeamsDisplay();
+      return;
+    }
+    let shuffled = [...selectedChars].sort(() => 0.5 - Math.random());
+    const mid = Math.ceil(shuffled.length / 2);
+    shuffled.forEach((char, index) => {
+      const originalChar = characters.find(c => c.id === char.id);
+      originalChar.assignedTeam = (index < mid) ? 'blue' : 'orange';
+    });
+    updateTeamsDisplay();
+  }
+
+  function switchTeam(charId) {
+    const char = characters.find(c => c.id === charId);
+    if (char) {
+      if (char.assignedTeam === 'blue') char.assignedTeam = 'orange';
+      else if (char.assignedTeam === 'orange') char.assignedTeam = 'blue';
+      updateTeamsDisplay();
+    }
+  }
+
+  function updateTeamsDisplay() {
+    const blueBox = document.getElementById('blueTeamBox');
+    const orangeBox = document.getElementById('orangeTeamBox');
+    blueBox.innerHTML = '';
+    orangeBox.innerHTML = '';
+
+    characters.filter(c => c.assignedTeam === 'blue').forEach(char => {
+      const slot = document.createElement('div');
+      slot.className = 'mini-avatar-slot';
+      slot.innerHTML = `<img src="${char.baseImg}" alt="عضو">`;
+      slot.onclick = () => switchTeam(char.id);
+      blueBox.appendChild(slot);
+    });
+
+    characters.filter(c => c.assignedTeam === 'orange').forEach(char => {
+      const slot = document.createElement('div');
+      slot.className = 'mini-avatar-slot';
+      slot.innerHTML = `<img src="${char.baseImg}" alt="عضو">`;
+      slot.onclick = () => switchTeam(char.id);
+      orangeBox.appendChild(slot);
+    });
+  }
+
+  function startGame() {
+    const teamA = document.getElementById('blueTeamInput').value || "الفريق الأول";
+    const teamB = document.getElementById('orangeTeamInput').value || "الفريق الثاني";
+    
+    window.teamAName = teamA;
+    window.teamBName = teamB;
+    window.maxRounds = selectedRounds;
+    window.teamAChars = characters.filter(c => c.assignedTeam === 'blue');
+    window.teamBChars = characters.filter(c => c.assignedTeam === 'orange');
+
+    document.getElementById('logoContainer').style.display = 'none';
+    document.getElementById('mainMenu').style.display = 'none';
+    document.getElementById('customizationCard').style.display = 'none';
+    document.getElementById('gameContainer').style.display = 'flex';
+
+    initHexGame();
+  }
+
+  let gridCells = [];
+  let activeCellIndex = null;
+  let roundNumber = 1;
+  let scoreA = 0;
+  let scoreB = 0;
+  let gameLocked = false;
+  let isGameOver = false;
+
+  const hexGridManual = document.getElementById('hexGridManual');
+  const scoreAEl = document.getElementById('scoreA');
+  const scoreBEl = document.getElementById('scoreB');
+  const roundLabelEl = document.getElementById('roundLabel');
+  const roundTransitionOverlay = document.getElementById('roundTransitionOverlay');
+  const transitionRoundName = document.getElementById('transitionRoundName');
+  const roundEndBanner = document.getElementById('roundEndBanner');
+  const winnersRow = document.getElementById('winnersRow');
+  const teamWinnerTitleEl = document.getElementById('teamWinnerTitle');
+  const showcaseEl = document.getElementById('charactersShowcase');
+
+  function getRoundDisplayName(num) {
+    if (window.maxRounds === 1) {
+      return "الجولة الحاسمة";
+    }
+    if (window.maxRounds === 2) {
+      return num === 1 ? "الجولة الأولى" : "الجولة الأخيرة";
+    }
+    if (window.maxRounds === 3) {
+      if (num === 1) return "الجولة الأولى";
+      if (num === 2) return "الجولة الثانية";
+      if (num === 3) return "الجولة الأخيرة";
+    }
+    return "الجولة " + num;
+  }
+
+  const cellGridMap = {
+    0: {r:0, c:0}, 1: {r:0, c:1}, 2: {r:0, c:2}, 3: {r:0, c:3}, 4: {r:0, c:4},
+    5: {r:1, c:0}, 6: {r:1, c:1}, 7: {r:1, c:2}, 8: {r:1, c:3}, 9: {r:1, c:4},
+    10: {r:2, c:0}, 11: {r:2, c:1}, 12: {r:2, c:2}, 13: {r:2, c:3}, 14: {r:2, c:4},
+    15: {r:3, c:0}, 16: {r:3, c:1}, 17: {r:3, c:2}, 18: {r:3, c:3}, 19: {r:3, c:4},
+    20: {r:4, c:0}, 21: {r:4, c:1}, 22: {r:4, c:2}, 23: {r:4, c:3}, 24: {r:4, c:4}
+  };
+
+  function getNeighbors(index) {
+    const r = cellGridMap[index].r;
+    const c = cellGridMap[index].c;
+    const neighbors = [];
+    let dirs = (r === 1 || r === 3) ? [
+      {r: -1, c: -1}, {r: -1, c: 0}, {r: 0, c: -1}, {r: 0, c: 1}, {r: 1, c: -1}, {r: 1, c: 0}
+    ] : [
+      {r: -1, c: 0}, {r: -1, c: 1}, {r: 0, c: -1}, {r: 0, c: 1}, {r: 1, c: 0}, {r: 1, c: 1}
+    ];
+
+    for (let d of dirs) {
+      const nr = r + d.r;
+      const nc = c + d.c;
+      if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+        for (let key in cellGridMap) {
+          if (cellGridMap[key].r === nr && cellGridMap[key].c === nc) {
+            neighbors.push(parseInt(key));
+            break;
+          }
+        }
+      }
+    }
+    return neighbors;
+  }
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function randomLettersPool(count) {
+    let pool = [];
+    const ARABIC_LETTERS = "ابتثجحخدذرزسشصضطظعغفقكلمنهوي".split('');
+    while (pool.length < count) {
+      pool = pool.concat(shuffle(ARABIC_LETTERS));
+    }
+    return pool.slice(0, count);
+  }
+
+  function initHexGame() {
+    document.getElementById('titleTeamA').textContent = window.teamAName;
+    document.getElementById('titleTeamB').textContent = window.teamBName;
+    roundNumber = 1;
+    scoreA = 0;
+    scoreB = 0;
+    scoreAEl.textContent = '0';
+    scoreBEl.textContent = '0';
+    
+    showRoundTransition(roundNumber, () => {
+      buildGrid();
+      gameLocked = false;
+    });
+  }
+
+  function showRoundTransition(num, callback) {
+    gameLocked = true;
+    hexGridManual.classList.remove('visible');
+    const roundText = getRoundDisplayName(num);
+    
+    transitionSound.currentTime = 0;
+    transitionSound.play().catch(error => console.log("تعذر تشغيل صوت الترانزشن:", error));
+
+    transitionRoundName.innerHTML = roundText;
+    roundTransitionOverlay.classList.add('active');
+
+    setTimeout(() => {
+      roundTransitionOverlay.classList.remove('active');
+      roundLabelEl.textContent = roundText;
+      setTimeout(() => {
+        if (callback) callback();
+      }, 300);
+    }, 1600);
+  }
+
+  function buildGrid() {
+    hexGridManual.innerHTML = '';
+    gridCells = [];
+    const letters = randomLettersPool(25);
+
+    for (let i = 0; i < 25; i++) {
+      const cellEl = document.createElement('div');
+      cellEl.className = `hex-cell cell-index-${i}`;
+      cellEl.innerHTML = `
+        <svg viewBox="0 0 100 115">
+          <path class="hex-bg" d="M 50,4 Q 53,4 89,24 A 12,12 0 0 1 95,34 L 95,81 A 12,12 0 0 1 89,91 Q 53,111 50,111 Q 47,111 11,91 A 12,12 0 0 1 5,81 L 5,34 A 12,12 0 0 1 11,24 Q 47,4 50,4 Z" />
+        </svg>
+        <span class="hex-text">${letters[i]}</span>
+      `;
+      cellEl.addEventListener('click', () => onCellClick(i));
+      hexGridManual.appendChild(cellEl);
+      gridCells.push({ letter: letters[i], team: null, el: cellEl, index: i, r: cellGridMap[i].r, c: cellGridMap[i].c });
+    }
+    
+    hexGridManual.classList.add('visible');
+
+    gridCells.forEach((cell, idx) => {
+      setTimeout(() => {
+        cell.el.classList.add('show');
+      }, idx * 40);
+    });
+
+    activeCellIndex = null;
+    updateScoreButtonsState();
+  }
+
+  function onCellClick(index) {
+    if (gameLocked) return;
+    const cell = gridCells[index];
+    if (cell.team) {
+      cell.team = null;
+      cell.el.classList.remove('team-a', 'team-b', 'winning-glow');
+      activeCellIndex = null;
+      updateScoreButtonsState();
+      return;
+    }
+    if (activeCellIndex !== null) gridCells[activeCellIndex].el.classList.remove('active');
+    activeCellIndex = (activeCellIndex === index) ? null : index;
+    if (activeCellIndex !== null) cell.el.classList.add('active');
+    updateScoreButtonsState();
+  }
+
+  function updateScoreButtonsState() {
+    const enabled = activeCellIndex !== null;
+    scoreAEl.classList.toggle('disabled', !enabled);
+    scoreBEl.classList.toggle('disabled', !enabled);
+  }
+
+  scoreAEl.onclick = () => assignActiveCell('a');
+  scoreBEl.onclick = () => assignActiveCell('b');
+
+  function assignActiveCell(team) {
+    if (activeCellIndex === null || gameLocked) return;
+    const cell = gridCells[activeCellIndex];
+    cell.el.classList.remove('active', 'team-a', 'team-b');
+    cell.team = team;
+    cell.el.classList.add(team === 'a' ? 'team-a' : 'team-b');
+    
+    playCellSound();
+
+    activeCellIndex = null;
+    updateScoreButtonsState();
+
+    if (checkWin('a')) triggerWin('a');
+    else if (checkWin('b')) triggerWin('b');
+  }
+
+  function checkWin(team) {
+    let startIndices = [], targetIndices = [];
+    gridCells.forEach((cell, idx) => {
+      if (cell.team === team) {
+        if (team === 'a') {
+          if (cell.r === 0) startIndices.push(idx);
+          if (cell.r === 4) targetIndices.push(idx);
+        } else {
+          if (cell.c === 0) startIndices.push(idx);
+          if (cell.c === 4) targetIndices.push(idx);
+        }
+      }
+    });
+    if (startIndices.length === 0 || targetIndices.length === 0) return false;
+    for (let start of startIndices) {
+      let queue = [start], visited = new Set([start]);
+      while (queue.length > 0) {
+        let curr = queue.shift();
+        if (targetIndices.includes(curr)) return true;
+        for (let neighbor of getNeighbors(curr)) {
+          if (gridCells[neighbor].team === team && !visited.has(neighbor)) {
+            visited.add(neighbor);
+            queue.push(neighbor);
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  function getWinningPathCells(team, start, targetIndices) {
+    let queue = [[start]], visited = new Set([start]);
+    while (queue.length > 0) {
+      let path = queue.shift(), curr = path[path.length - 1];
+      if (targetIndices.includes(curr)) return path;
+      for (let neighbor of getNeighbors(curr)) {
+        if (gridCells[neighbor].team === team && !visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push([...path, neighbor]);
+        }
+      }
+    }
+    return [];
+  }
+
+  function triggerWin(team) {
+    if (gameLocked) return;
+    gameLocked = true;
+    
+    if (team === 'a') {
+      scoreA++;
+      scoreAEl.textContent = scoreA;
+    } else {
+      scoreB++;
+      scoreBEl.textContent = scoreB;
+    }
+
+    let startIndices = [], targetIndices = [];
+    gridCells.forEach((cell, idx) => {
+      if (cell.team === team) {
+        if (team === 'a') {
+          if (cell.r === 0) startIndices.push(idx);
+          if (cell.r === 4) targetIndices.push(idx);
+        } else {
+          if (cell.c === 0) startIndices.push(idx);
+          if (cell.c === 4) targetIndices.push(idx);
+        }
+      }
+    });
+
+    for (let start of startIndices) {
+      let winningPath = getWinningPathCells(team, start, targetIndices);
+      if (winningPath.length > 0) {
+        winningPath.forEach(idx => gridCells[idx].el.classList.add('winning-glow'));
+        break;
+      }
+    }
+
+    if (scoreA === 2 || scoreB === 2 || roundNumber >= window.maxRounds) {
+      isGameOver = true;
+      setTimeout(() => showGameOverScreen(team), 1500);
+      return;
+    }
+
+    setTimeout(() => {
+      roundNumber++;
+      showRoundTransition(roundNumber, () => {
+        buildGrid();
+        gameLocked = false;
+      });
+    }, 1500);
+  }
+
+  function showGameOverScreen(winnerTeam) {
+    winSound.currentTime = 0;
+    winSound.play().catch(error => console.log("تعذر تشغيل صوت النهاية:", error));
+
+    winnersRow.innerHTML = '';
+    
+    const winningChars = winnerTeam === 'a' ? window.teamAChars : window.teamBChars;
+    const losingChars = winnerTeam === 'a' ? window.teamBChars : window.teamAChars;
+
+    function renderTeamCharacters(chars, isWinner) {
+      winnersRow.innerHTML = '';
+      const total = chars.length;
+
+      chars.forEach((char, index) => {
+        const item = document.createElement('div');
+        
+        if (total === 4) {
+          if (index === 1 || index === 2) {
+            item.className = 'character-item center-char';
+          } else {
+            item.className = 'character-item side-char';
+          }
+        } else if (total === 3) {
+          if (index === 1) {
+            item.className = 'character-item center-char';
+          } else {
+            item.className = 'character-item side-char';
+          }
+        } else {
+          const midIndex = (total - 1) / 2;
+          const distanceFromCenter = Math.abs(index - midIndex);
+          if (distanceFromCenter === 0) {
+            item.className = 'character-item center-char';
+          } else if (distanceFromCenter >= 1.5) {
+            item.className = 'character-item edge-char';
+          } else {
+            item.className = 'character-item side-char';
+          }
+        }
+
+        const img = document.createElement('img');
+        img.src = isWinner ? char.winImg : char.loseImg;
+        item.appendChild(img);
+        winnersRow.appendChild(item);
+      });
+    }
+
+    const losingTeamName = winnerTeam === 'a' ? window.teamBName : window.teamAName;
+    const winningTeamName = winnerTeam === 'a' ? window.teamAName : window.teamBName;
+
+    renderTeamCharacters(losingChars, false);
+    teamWinnerTitleEl.textContent = losingTeamName;
+    
+    showcaseEl.classList.remove('fade-in-anim', 'fade-out-anim');
+    roundEndBanner.classList.add('visible');
+    
+    setTimeout(() => {
+      showcaseEl.classList.add('fade-in-anim');
+    }, 50);
+
+    setTimeout(() => { 
+      showcaseEl.classList.remove('fade-in-anim');
+      showcaseEl.classList.add('fade-out-anim'); 
+    }, 10500);
+
+    setTimeout(() => {
+      renderTeamCharacters(winningChars, true);
+      teamWinnerTitleEl.textContent = winningTeamName;
+      
+      showcaseEl.classList.remove('fade-out-anim');
+      setTimeout(() => {
+        showcaseEl.classList.add('fade-in-anim');
+      }, 50);
+    }, 12500);
+  }
+
+  function handleNextAction() {
+    window.location.reload();
+  }
+</script>
+
+</body>
+</html>

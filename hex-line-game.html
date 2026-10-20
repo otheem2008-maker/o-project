@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>حروف مع عين - اللعبة</title>
+<script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiIPYX9SU/9ZILvMPg/oStvngn8v3a43697960300" crossorigin="anonymous"></script>
+<style>
+  @font-face {
+    font-family: 'Azahar';
+    src: url('alfont_com_29lt-azahar-display-al-tn-trial-black.woff') format('woff');
+  }
+
+  :root {
+    --border-radius-standard: 16px;
+  }
+
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: #3b5262;
+    color: #E5E4DF;
+    font-family: 'Azahar', sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row-reverse;
+    gap: 8px;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .board-wrap {
+    position: relative;
+    background-color: #262624;
+    background-image: url(BQDG1067.PNG);
+    background-size: 220% 130%;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.55);
+    overflow: hidden;
+    border-radius: var(--border-radius-standard);
+  }
+
+  /* تقليل المسافة الأفقية بين الخلايا لتتلاصق بالعرض بينما الارتفاع الراسي ممتاز */
+  .hex-grid-manual {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 84px);
+    grid-template-rows: repeat(5, 88px);
+    gap: 10px 20px;
+    transform: translate(15px, -10px) scale(0.92);
+    transform-origin: center center;
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .hex-cell {
+    position: absolute;
+    width: 172px;
+    height: 132px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent; 
+    -webkit-touch-callout: none; 
+    user-select: none; 
+    filter: brightness(0.85);
+    touch-action: manipulation;
+  }
+
+  .hex-cell svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hex-bg {
+    fill: #E5E4DF;
+    stroke: #283C49;
+    stroke-width: 4px;
+    transition: fill 0.2s;
+  }
+
+  .hex-text {
+    position: relative;
+    z-index: 2;
+    font-size: 45px;
+    font-weight: 900;
+    color: #283C49;
+    user-select: none;
+    font-family: 'Azahar', sans-serif;
+  }
+
+  .hex-cell.active { filter: brightness(0.75) !important; }
+  
+  .hex-cell.team-a { filter: brightness(1) !important; }
+  .hex-cell.team-a .hex-bg { fill: #D97757; }
+  .hex-cell.team-a .hex-text { display: none; }
+
+  .hex-cell.team-b { filter: brightness(1) !important; }
+  .hex-cell.team-b .hex-bg { fill: #5B8AA6; }
+  .hex-cell.team-b .hex-text { display: none; }
+
+  .cell-index-0  { grid-column: 1; grid-row: 1; }
+  .cell-index-1  { grid-column: 2; grid-row: 1; }
+  .cell-index-2  { grid-column: 3; grid-row: 1; }
+  .cell-index-3  { grid-column: 4; grid-row: 1; }
+  .cell-index-4  { grid-column: 5; grid-row: 1; }
+
+  .cell-index-5  { grid-column: 1; grid-row: 2; transform: translateX(52px); }
+  .cell-index-6  { grid-column: 2; grid-row: 2; transform: translateX(52px); }
+  .cell-index-7  { grid-column: 3; grid-row: 2; transform: translateX(52px); }
+  .cell-index-8  { grid-column: 4; grid-row: 2; transform: translateX(52px); }
+  .cell-index-9  { grid-column: 5; grid-row: 2; transform: translateX(52px); }
+
+  .cell-index-10 { grid-column: 1; grid-row: 3; }
+  .cell-index-11 { grid-column: 2; grid-row: 3; }
+  .cell-index-12 { grid-column: 3; grid-row: 3; }
+  .cell-index-13 { grid-column: 4; grid-row: 3; }
+  .cell-index-14 { grid-column: 5; grid-row: 3; }
+
+  .cell-index-15 { grid-column: 1; grid-row: 4; transform: translateX(52px); }
+  .cell-index-16 { grid-column: 2; grid-row: 4; transform: translateX(52px); }
+  .cell-index-17 { grid-column: 3; grid-row: 4; transform: translateX(52px); }
+  .cell-index-18 { grid-column: 4; grid-row: 4; transform: translateX(52px); }
+  .cell-index-19 { grid-column: 5; grid-row: 4; transform: translateX(52px); }
+
+  .cell-index-20 { grid-column: 1; grid-row: 5; }
+  .cell-index-21 { grid-column: 2; grid-row: 5; }
+  .cell-index-22 { grid-column: 3; grid-row: 5; }
+  .cell-index-23 { grid-column: 4; grid-row: 5; }
+  .cell-index-24 { grid-column: 5; grid-row: 5; }
+
+  .side-panel {
+    background-color: #283C49;
+    padding: 12px 8px;
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    min-height: 550px;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: var(--border-radius-standard);
+  }
+  
+  .round-label {  
+    font-size: 25px;  
+    font-weight: 900;  
+    color: #E5E4DF;  
+    text-align: center;
+    font-family: 'Azahar', sans-serif;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+  }
+
+  .backdrop-blur-overlay {
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    background-color: rgba(26, 26, 24, 0.4);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1.5s ease;
+  }
+  .backdrop-blur-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .flying-clone {
+    position: fixed;
+    font-size: 25px;
+    font-weight: 900;
+    color: #E5E4DF;
+    font-family: 'Azahar', sans-serif;
+    text-align: center;
+    z-index: 1000;
+    pointer-events: none;
+    line-height: 1.2;
+    transition: transform 1.3s cubic-bezier(0.25, 1, 0.5, 1), font-size 1.3s ease;
+    will-change: transform, font-size;
+  }
+
+  .teams-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: absolute;
+    bottom: 20px;        
+    left: 8px;
+    right: 8px;
+    width: auto;
+  }
+
+  .team-section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+  }
+
+  .team-name-box {
+    width: 100%;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 900;
+    color: #E5E4DF;
+    box-sizing: border-box; 
+    border-radius: 10px;
+  }
+  .team-name-box.team-a { background-color: #D97757; }
+  .team-name-box.team-b { background-color: #5B8AA6; }
+
+  .score-box {
+    width: 100%; 
+    height: 100px;  
+    display: flex;  
+    align-items: center;  
+    justify-content: center;
+    font-size: 55px;  
+    font-weight: 900;  
+    color: #E5E4DF;  
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(0,0,0,0.38);
+    box-sizing: border-box;
+    padding-bottom: 0px;
+    border-radius: var(--border-radius-standard);
+  }
+  .score-box.team-a { background-color: #D97757; }
+  .score-box.team-b { background-color: #5B8AA6; }
+  .score-box.disabled { opacity: 1; cursor: pointer; }
+
+  .round-end-banner {
+    position: fixed; 
+    inset: 0; 
+    background-color: rgba(26,26,24,0.96);
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    flex-direction: column; 
+    z-index: 2000; 
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .round-end-banner.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .characters-showcase {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 1300px;
+    transition: opacity 0.6s ease-in-out;
+    opacity: 1;
+  }
+
+  .characters-showcase.fade {
+    opacity: 0;
+  }
+
+  .row-winners {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .character-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .character-item img {
+    border-radius: 0; 
+    object-fit: contain; 
+    border: none;
+    background-color: transparent;
+    filter: drop-shadow(0 15px 25px rgba(0,0,0,0.6));
+  }
+
+  .team-winner-title {
+    font-size: 60px;
+    font-weight: 900;
+    color: #E5E4DF;
+    font-family: 'Azahar', sans-serif;
+    text-shadow: 0 5px 15px rgba(0,0,0,0.7);
+    margin-top: 0;
+    letter-spacing: 1px;
+  }
+
+  .next-round-btn {
+    position: absolute;
+    bottom: 35px;
+    left: 45px;
+    background-color: #30302E; 
+    color: #E5E4DF; 
+    border: none; 
+    padding: 12px 35px;
+    font-size: 17px; 
+    font-weight: 700; 
+    font-family: inherit; 
+    border-radius: var(--border-radius-standard); 
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease;
+    z-index: 10;
+  }
+  .next-round-btn:hover { transform: scale(1.05); }
+
+  .extra-action-btn {
+    position: absolute;
+    bottom: 35px;
+    right: 45px;
+    background-color: #30302E; 
+    color: #E5E4DF; 
+    border: none; 
+    padding: 12px 35px;
+    font-size: 17px; 
+    font-weight: 700; 
+    font-family: inherit; 
+    border-radius: var(--border-radius-standard); 
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    transition: transform 0.2s ease;
+    z-index: 10;
+  }
+  .extra-action-btn:hover { transform: scale(1.05); }
+
+  @keyframes winGlow {
+    0% { filter: brightness(1); stroke: #262624; stroke-width: 2.2px; }
+    50% { filter: brightness(1.25); stroke: #E5E4DF; stroke-width: 4px; }
+    100% { filter: brightness(1); stroke: #262624; stroke-width: 2.2px; }
+  }
+
+  .hex-cell.winning-glow {
+    z-index: 50 !important;
+  }
+
+  .hex-cell.winning-glow .hex-bg {
+    animation: winGlow 0.6s ease-in-out infinite;
+  }
+
+  .hex-grid-manual.fade-out {
+    opacity: 0;
+    transform: translate(15px, -10px) scale(0.85);
+  }
+</style>
+</head>
+<body>
+
+  <div class="backdrop-blur-overlay" id="blurOverlay"></div>
+
+  <div class="board-wrap">
+    <div class="hex-grid-manual" id="hexGridManual"></div>
+  </div>
+
+  <div class="side-panel">
+    <div class="round-label" id="roundLabel"></div>
+    
+    <div class="teams-container">
+      <div class="team-section">
+        <div class="team-name-box team-a" id="titleTeamA">الفريق الأول</div>
+        <div class="score-box team-a disabled" id="scoreA">0</div>
+      </div>
+      <div class="team-section">
+        <div class="team-name-box team-b" id="titleTeamB">الفريق الثاني</div>
+        <div class="score-box team-b disabled" id="scoreB">0</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="round-end-banner" id="roundEndBanner">
+    <div class="characters-showcase fade" id="charactersShowcase">
+      <div class="row-winners" id="winnersRow"></div>
+      <div class="team-winner-title" id="teamWinnerTitle"></div>
+    </div>
+    <button class="next-round-btn" id="nextRoundBtn" onclick="handleNextAction()">عودة</button>
+    <button class="extra-action-btn" id="extraActionBtn" onclick="handleExtraAction()">خروج</button>
+  </div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    for (let i = 1; i <= 20; i++) {
+      ['win', 'lose'].forEach(state => {
+        ['PNG', 'png'].forEach(ext => {
+          const img = new Image();
+          img.src = `char${i}-${state}.${ext}`;
+          const imgBase = new Image();
+          imgBase.src = `char${i}.${ext}`;
+        });
+      });
+    }
+  });
+
+  const teamAName = localStorage.getItem('hexTeamA') || "الفريق الأول";
+  const teamBName = localStorage.getItem('hexTeamB') || "الفريق الثاني";
+  const maxRounds = parseInt(localStorage.getItem('hexTotalRounds')) || 1;
+  
+  let teamAChars = JSON.parse(localStorage.getItem('gameTeamA') || '[]');
+  let teamBChars = JSON.parse(localStorage.getItem('gameTeamB') || '[]');
+  
+  const cellAudioPath = 'cell-sound.mp3';   
+  const roundAudioPath = 'round-sound.mp3'; 
+  const winAudioPath = 'win-sound.mp3';     
+
+  document.getElementById('titleTeamA').textContent = teamAName;
+  document.getElementById('titleTeamB').textContent = teamBName;
+
+  const TOTAL_CELLS = 25;
+  const ARABIC_LETTERS = "ابتثجحخدذرزسشصضطظعغفقكلمنهوي".split('');
+
+  let gridCells = [];
+  let activeCellIndex = null;
+  let roundNumber = 1;
+  let scoreA = 0;
+  let scoreB = 0;
+  let gameLocked = false;
+  let isGameOver = false;
+
+  const hexGridManual = document.getElementById('hexGridManual');
+  const scoreAEl = document.getElementById('scoreA');
+  const scoreBEl = document.getElementById('scoreB');
+  const roundLabelEl = document.getElementById('roundLabel');
+  const blurOverlayEl = document.getElementById('blurOverlay');
+  const roundEndBanner = document.getElementById('roundEndBanner');
+  const winnersRow = document.getElementById('winnersRow');
+  const teamWinnerTitleEl = document.getElementById('teamWinnerTitle');
+  const showcaseEl = document.getElementById('charactersShowcase');
+  const ROUND_WORDS = ["الأولى", "الثانية", "الثالثة", "الرابعة", "الخامسة", "السادسة", "السابعة", "الثامنة"];
+
+  function getRoundDisplayName(num) {
+    if (num === maxRounds) {
+      if (maxRounds === 1) return "الحاسمة";
+      return "الأخيرة";
+    }
+    return ROUND_WORDS[num - 1] || num;
+  }
+
+  const cellGridMap = {
+    0: {r:0, c:0}, 1: {r:0, c:1}, 2: {r:0, c:2}, 3: {r:0, c:3}, 4: {r:0, c:4},
+    5: {r:1, c:0}, 6: {r:1, c:1}, 7: {r:1, c:2}, 8: {r:1, c:3}, 9: {r:1, c:4},
+    10: {r:2, c:0}, 11: {r:2, c:1}, 12: {r:2, c:2}, 13: {r:2, c:3}, 14: {r:2, c:4},
+    15: {r:3, c:0}, 16: {r:3, c:1}, 17: {r:3, c:2}, 18: {r:3, c:3}, 19: {r:3, c:4},
+    20: {r:4, c:0}, 21: {r:4, c:1}, 22: {r:4, c:2}, 23: {r:4, c:3}, 24: {r:4, c:4}
+  };
+
+  function getNeighbors(index) {
+    const r = cellGridMap[index].r;
+    const c = cellGridMap[index].c;
+    const neighbors = [];
+
+    let dirs = (r === 1 || r === 3) ? [
+      {r: -1, c: -1}, {r: -1, c: 0}, 
+      {r: 0, c: -1}, {r: 0, c: 1},   
+      {r: 1, c: -1}, {r: 1, c: 0}    
+    ] : [
+      {r: -1, c: 0}, {r: -1, c: 1},  
+      {r: 0, c: -1}, {r: 0, c: 1},   
+      {r: 1, c: 0}, {r: 1, c: 1}     
+    ];
+
+    for (let d of dirs) {
+      const nr = r + d.r;
+      const nc = c + d.c;
+      if (nr >= 0 && nr < 5 && nc >= 0 && nc < 5) {
+        for (let key in cellGridMap) {
+          if (cellGridMap[key].r === nr && cellGridMap[key].c === nc) {
+            neighbors.push(parseInt(key));
+            break;
+          }
+        }
+      }
+    }
+    return neighbors;
+  }
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function randomLettersPool(count) {
+    let pool = [];
+    while (pool.length < count) {
+      pool = pool.concat(shuffle(ARABIC_LETTERS));
+    }
+    return pool.slice(0, count);
+  }
+
+  function buildGrid() {
+    hexGridManual.innerHTML = '';
+    gridCells = [];
+    const letters = randomLettersPool(TOTAL_CELLS);
+
+    for (let i = 0; i < TOTAL_CELLS; i++) {
+      const cellEl = document.createElement('div');
+      cellEl.className = `hex-cell cell-index-${i}`;
+      cellEl.innerHTML = `
+        <svg viewBox="0 0 100 115">
+          <path class="hex-bg" d="M 50,4 
+                   Q 53,4 89,24 
+                   A 12,12 0 0 1 95,34 
+                   L 95,81 
+                   A 12,12 0 0 1 89,91 
+                   Q 53,111 50,111 
+                   Q 47,111 11,91 
+                   A 12,12 0 0 1 5,81 
+                   L 5,34 
+                   A 12,12 0 0 1 11,24 
+                   Q 47,4 50,4 Z" />
+        </svg>
+        <span class="hex-text">${letters[i]}</span>
+      `;
+      
+      const cellData = { 
+        letter: letters[i], 
+        team: null, 
+        el: cellEl, 
+        index: i,
+        r: cellGridMap[i].r,
+        c: cellGridMap[i].c
+      };
+      
+      cellEl.addEventListener('click', () => onCellClick(i));
+      cellEl.addEventListener('touchend', (e) => {
+        e.preventDefault();
+        onCellClick(i);
+      }, { passive: false });
+
+      hexGridManual.appendChild(cellEl);
+      gridCells.push(cellData);
+    }
+    activeCellIndex = null;
+    updateScoreButtonsState();
+  }
+
+  function onCellClick(index) {
+    if (gameLocked) return;
+    const cell = gridCells[index];
+
+    if (cell.team) {
+      cell.team = null;
+      cell.el.classList.remove('team-a', 'team-b', 'winning-glow');
+      activeCellIndex = null;
+      updateScoreButtonsState();
+      return;
+    }
+
+    if (activeCellIndex !== null) {
+      gridCells[activeCellIndex].el.classList.remove('active');
+    }
+
+    if (activeCellIndex === index) {
+      activeCellIndex = null;
+    } else {
+      activeCellIndex = index;
+      cell.el.classList.add('active');
+    }
+    updateScoreButtonsState();
+  }
+
+  function updateScoreButtonsState() {
+    const enabled = activeCellIndex !== null;
+    scoreAEl.classList.toggle('disabled', !enabled);
+    scoreBEl.classList.toggle('disabled', !enabled);
+  }
+
+  scoreAEl.addEventListener('click', () => assignActiveCell('a'));
+  scoreBEl.addEventListener('click', () => assignActiveCell('b'));
+  
+  scoreAEl.addEventListener('touchend', (e) => { e.preventDefault(); assignActiveCell('a'); }, { passive: false });
+  scoreBEl.addEventListener('touchend', (e) => { e.preventDefault(); assignActiveCell('b'); }, { passive: false });
+
+  function checkWin(team) {
+    let startIndices = [];
+    let targetIndices = [];
+
+    gridCells.forEach((cell, idx) => {
+      if (cell.team === team) {
+        if (team === 'a') {
+          if (cell.r === 0) startIndices.push(idx);
+          if (cell.r === 4) targetIndices.push(idx);
+        } else {
+          if (cell.c === 0) startIndices.push(idx);
+          if (cell.c === 4) targetIndices.push(idx);
+        }
+      }
+    });
+
+    if (startIndices.length === 0 || targetIndices.length === 0) return false;
+
+    for (let start of startIndices) {
+      let queue = [start];
+      let visited = new Set([start]);
+
+      while (queue.length > 0) {
+        let curr = queue.shift();
+        if (targetIndices.includes(curr)) return true;
+
+        for (let neighbor of getNeighbors(curr)) {
+          if (gridCells[neighbor].team === team && !visited.has(neighbor)) {
+            visited.add(neighbor);
+            queue.push(neighbor);
+          }
+        }
+      }
+    }
+    return false;
+  }
+
+  function getWinningPathCells(team, start, targetIndices) {
+    let queue = [[start]];
+    let visited = new Set([start]);
+
+    while (queue.length > 0) {
+      let path = queue.shift();
+      let curr = path[path.length - 1];
+
+      if (targetIndices.includes(curr)) return path;
+
+      for (let neighbor of getNeighbors(curr)) {
+        if (gridCells[neighbor].team === team && !visited.has(neighbor)) {
+          visited.add(neighbor);
+          queue.push([...path, neighbor]);
+        }
+      }
+    }
+    return [];
+  }
+
+  function playRoundIntroAnimation(newRoundNum, onComplete) {
+    if (roundAudioPath) {
+      const roundAudio = new Audio(roundAudioPath);
+      roundAudio.play().catch(e => console.log("تعذر تشغيل صوت الجولة:", e));
+    }
+
+    const roundName = getRoundDisplayName(newRoundNum);
+    const roundText = (maxRounds === 1 && newRoundNum === 1) ? 'الجولة<br>الحاسمة' : 'الجولة<br>' + roundName;
+    
+    roundLabelEl.innerHTML = '';
+    blurOverlayEl.classList.add('active');
+
+    const clone = document.createElement('div');
+    clone.className = 'flying-clone';
+    clone.innerHTML = roundText;
+    document.body.appendChild(clone);
+
+    const startX = window.innerWidth / 2;
+    const startY = window.innerHeight / 2;
+    const targetRect = roundLabelEl.getBoundingClientRect();
+    const targetX = targetRect.left + (targetRect.width / 2);
+    const targetY = targetRect.top + (targetRect.height / 2);
+
+    clone.style.left = `${startX}px`;
+    clone.style.top = `${startY}px`;
+    clone.style.transform = `translate(-50%, -50%) scale(2.2)`;
+
+    setTimeout(() => {
+      blurOverlayEl.classList.remove('active');
+      const distanceX = targetX - startX;
+      const distanceY = targetY - startY;
+
+      clone.style.transform = `translate(calc(-50% + ${distanceX}px), calc(-50% + ${distanceY}px)) scale(1)`;
+      clone.style.fontSize = '25px';
+
+      setTimeout(() => {
+        clone.remove();
+        roundLabelEl.innerHTML = roundText;
+        if (onComplete) onComplete();
+      }, 1600);
+    }, 2000);
+  }
+
+  function triggerWin(team) {
+    if (gameLocked) return;
+    gameLocked = true;
+
+    if (team === 'a') {
+      scoreA++;
+      scoreAEl.textContent = scoreA;
+    } else {
+      scoreB++;
+      scoreBEl.textContent = scoreB;
+    }
+
+    let startIndices = [];
+    let targetIndices = [];
+    gridCells.forEach((cell, idx) => {
+      if (cell.team === team) {
+        if (team === 'a') {
+          if (cell.r === 0) startIndices.push(idx);
+          if (cell.r === 4) targetIndices.push(idx);
+        } else {
+          if (cell.c === 0) startIndices.push(idx);
+          if (cell.c === 4) targetIndices.push(idx);
+        }
+      }
+    });
+
+    for (let start of startIndices) {
+      let winningPath = getWinningPathCells(team, start, targetIndices);
+      if (winningPath.length > 0) {
+        winningPath.forEach(idx => {
+          gridCells[idx].el.classList.add('winning-glow');
+        });
+        break;
+      }
+    }
+
+    if (roundNumber >= maxRounds) {
+      isGameOver = true;
+      setTimeout(() => {
+        showGameOverScreen(team);
+      }, 1500);
+      return;
+    }
+
+    setTimeout(() => {
+      hexGridManual.classList.add('fade-out');
+      setTimeout(() => {
+        roundNumber++;
+        buildGrid();
+        hexGridManual.classList.remove('fade-out');
+        playRoundIntroAnimation(roundNumber, () => {
+          gameLocked = false;
+        });
+      }, 400);
+    }, 1500);
+  }
+
+  function showGameOverScreen(winnerTeam) {
+    winnersRow.innerHTML = '';
+
+    const winningChars = winnerTeam === 'a' ? teamAChars : teamBChars;
+    const losingChars = winnerTeam === 'a' ? teamBChars : teamAChars;
+
+    if (winAudioPath) {
+      const audio = new Audio(winAudioPath);
+      audio.play().catch(e => console.log("تعذر تشغيل الصوت تلقائياً:", e));
+    }
+
+    function extractCharNumber(char) {
+      if (char === null || char === undefined) return null;
+      let numStr = '';
+      if (typeof char === 'object') {
+        const val = char.id || char.number || char.charNumber || char.value || char.name || '';
+        const match = String(val).match(/(\d+)/);
+        numStr = match ? match[1] : String(val);
+      } else {
+        let str = String(char).trim();
+        const match = str.match(/(\d+)/);
+        numStr = match ? match[1] : str;
+      }
+      return numStr;
+    }
+
+    function createCharacterElements(chars, state, altText) {
+      const container = document.createElement('div');
+      container.className = 'row-winners';
+      
+      const total = chars.length;
+      if (total === 0) return container;
+
+      const mid = (total - 1) / 2;
+      const countScale = total > 4 ? Math.max(0.7, 4 / total) : 1;
+      const baseSize = Math.round(360 * countScale);
+
+      chars.forEach((char, index) => {
+        let num = extractCharNumber(char);
+        if (!num) return;
+
+        const candidates = [
+          `char${num}-${state}.PNG`,
+          `char${num}-${state}.png`,
+          `char${num}.PNG`,
+          `char${num}.png`,
+          `${num}-${state}.PNG`,
+          `${num}-${state}.png`,
+          `${num}.PNG`,
+          `${num}.png`
+        ];
+
+        let attempt = 0;
+        const item = document.createElement('div');
+        item.className = 'character-item';
+
+        const distanceFromCenter = Math.abs(index - mid);
+        const sizeFactor = Math.max(0.72, 1 - (distanceFromCenter * 0.12));
+        const currentSize = Math.round(baseSize * sizeFactor);
+
+        const overlapMargin = Math.round(-65 * countScale);
+        item.style.marginLeft = `${overlapMargin}px`;
+        item.style.marginRight = `${overlapMargin}px`;
+        
+        const translateYOffset = Math.round(Math.pow(distanceFromCenter, 1.5) * 14);
+        item.style.transform = `translateY(${translateYOffset}px)`;
+
+        const img = document.createElement('img');
+        img.style.width = `${currentSize}px`;
+        img.style.height = `${currentSize}px`;
+        img.alt = altText;
+
+        img.onerror = function () {
+          attempt++;
+          if (attempt < candidates.length) {
+            img.src = candidates[attempt];
+          } else {
+            img.style.display = 'none';
+            const fallback = document.createElement('div');
+            fallback.textContent = "شخصية " + num;
+            fallback.style.color = '#fff';
+            fallback.style.fontSize = '22px';
+            fallback.style.fontWeight = 'bold';
+            fallback.style.backgroundColor = '#333';
+            fallback.style.padding = '12px 24px';
+            fallback.style.border = '2px solid #fff';
+            fallback.style.borderRadius = '8px';
+            item.appendChild(fallback);
+          }
+        };
+
+        img.src = candidates[0];
+        item.appendChild(img);
+        container.appendChild(item);
+      });
+
+      return container;
+    }
+
+    const winningTeamName = winnerTeam === 'a' ? teamAName : teamBName;
+    const losingTeamName = winnerTeam === 'a' ? teamBName : teamAName;
+
+    if (losingChars.length > 0) {
+      const losingElement = createCharacterElements(losingChars, 'lose', 'خاسر');
+      winnersRow.appendChild(losingElement);
+    }
+    
+    teamWinnerTitleEl.textContent = losingTeamName;
+    roundEndBanner.classList.add('visible');
+
+    setTimeout(() => {
+      showcaseEl.classList.remove('fade');
+    }, 1200);
+
+    setTimeout(() => {
+      showcaseEl.classList.add('fade');
+    }, 12300); 
+
+    setTimeout(() => {
+      winnersRow.innerHTML = '';
+      if (winningChars.length > 0) {
+        const winningElement = createCharacterElements(winningChars, 'win', 'فائز');
+        winnersRow.appendChild(winningElement);
+      }
+      teamWinnerTitleEl.textContent = winningTeamName;
+    }, 12900);
+
+    setTimeout(() => {
+      showcaseEl.classList.remove('fade');
+    }, 13000); 
+  }
+
+  function assignActiveCell(team) {
+    if (activeCellIndex === null || gameLocked) return;
+
+    if (cellAudioPath) {
+      const cellAudio = new Audio(cellAudioPath);
+      cellAudio.play().catch(e => console.log("تعذر تشغيل صوت الخلية:", e));
+    }
+
+    const cell = gridCells[activeCellIndex];
+    cell.el.classList.remove('active', 'team-a', 'team-b');
+    
+    cell.team = team;
+    cell.el.classList.add(team === 'a' ? 'team-a' : 'team-b');
+
+    activeCellIndex = null;
+    updateScoreButtonsState();
+
+    if (checkWin('a')) {
+      triggerWin('a');
+    } else if (checkWin('b')) {
+      triggerWin('b');
+    }
+  }
+
+  function handleNextAction() {
+    window.location.href = 'settings.html';
+  }
+
+  function handleExtraAction() {
+    window.location.href = 'index.html'; 
+  }
+
+  playRoundIntroAnimation(1, () => {
+    gameLocked = false;
+  });
+
+  buildGrid();
+</script>
+
+</body>
+</html>

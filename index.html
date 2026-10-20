@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>حروف مع ع</title>
+<script src="//instant.page/5.2.0" type="module" integrity="sha384-jnZyxPjiIPYX9SU/9ZILvMPg/oStvngn8v3a43697960300" crossorigin="anonymous"></script>
+<style>
+
+  @font-face {
+    font-family: 'Azahar';
+    src: url('alfont_com_29lt-azahar-display-al-tn-trial-black.woff') format('woff');
+  }
+
+  /* ==========================================================
+     📌 [1] مكان تعديل ألوان النمط الليلي (افتراضي)
+     ========================================================== */
+  :root {
+    --bg-color: #0C1D4E;              /* خلفية الصفحة الرئيسية */
+    --text-color: #E5E4DF;            /* لون النصوص العامة */
+    
+    --card-bg: #21252A;               /* خلفية البطاقات الرئيسية وقسم الألعاب */
+    --card-inner-bg: #2C3138;         /* خلفية العناصر الداخلية والبطاقات الفرعية والأزرار */
+    --card-border: rgba(255, 255, 255, 0.12); /* لون حدود العناصر والبطاقات */
+    
+    --nav-hover: #E1B862;             /* لون تأثير المرور (Hover) على الروابط */
+    --hr-color: #2C3138;              /* لون الخط الفاصل العلوي */
+    --sun-circle: #E1B862;            /* لون الدائرة الخلفية للشعار */
+    --btn-bg: #D97757;                /* لون الأزرار الخاصة */
+  }
+
+  /* ==========================================================
+     📌 [2] مكان تعديل ألوان النمط الصباحي (النهار)
+     ========================================================== */
+  body.light-mode {
+    --bg-color: #E1B862;              /* خلفية الصفحة الرئيسية */
+    --text-color: #21252A;            /* لون النصوص العامة */
+    
+    --card-bg: #FBFDFF;               /* خلفية البطاقات الرئيسية وقسم الألعاب */
+    --card-inner-bg: #D5E0EC;         /* خلفية العناصر الداخلية والبطاقات الفرعية والأزرار */
+    --card-border: rgba(0, 0, 0, 0.1);/* لون حدود العناصر والبطاقات */
+    
+    --nav-hover: #FBFDFF;             /* لون تأثير المرور (Hover) على الروابط */
+    --hr-color: #D1D5DB;              /* لون الخط الفاصل العلوي */
+    --sun-circle: #E1B862;            /* لون الدائرة الخلفية للشعار */
+    --btn-bg: #21252A;                /* لون الأزرار الخاصة */
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Azahar', sans-serif;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+
+  html, body {
+    overflow-x: hidden;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
+  }
+
+  section {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1024px) {
+    #games-section, #about-section {
+      max-width: 92vw !important;
+      padding: 50px 20px !important;
+    }
+    #games-section > div:not([style*="position: absolute"]) {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 18px !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    #games-section > div:not([style*="position: absolute"]) {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- المحتوى الرئيسي -->
+  <div id="mainHomeContent" style="width: 100%;">
+    <header style="overflow: visible;">
+        <nav class="navigation" style="display: flex; justify-content: space-between; align-items: center; padding: 20px 30px;">
+            <ul style="list-style: none; display: flex; gap: 25px; direction: rtl; margin: 0; padding: 0;">
+                <li><a href="team-builder.html" style="color: var(--text-color); text-decoration: none; font-weight: 700; transition: color 0.2s;" onmouseover="this.style.color='var(--nav-hover)'" onmouseout="this.style.color='var(--text-color)'">اقتراحاتكم</a></li>
+                <li><a href="about-section" style="color: var(--text-color); text-decoration: none; font-weight: 700; transition: color 0.2s;" onmouseover="this.style.color='var(--nav-hover)'" onmouseout="this.style.color='var(--text-color)'">وش هي ع ؟</a></li>
+            </ul>
+            
+            <!-- أيقونة تبديل النمط -->
+            <button id="themeToggleBtn" style="background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-color); width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); transition: transform 0.2s;" title="تبديل النمط">
+                🌙
+            </button>
+        </nav>
+    </header>
+    <hr style="border: 0; height: 1.5px; background-color: var(--hr-color); margin: 0;" />
+    
+    <!-- قسم اللوجو -->
+    <section class="logo" style="position: relative; margin: 30px auto 140px auto; overflow: visible; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--card-border); border-radius: 24px; padding: 40px 40px 30px 40px; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12); max-width: 700px; width: 90%; text-align: center; display: flex; flex-direction: column; align-items: center; height: auto; z-index: 5; background-color: var(--card-bg);">
+      <div style="position: relative; border-radius: 16px; padding: 30px; background-color: var(--card-inner-bg); border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center; width: 100%; height: 320px;">
+          <div style="position: absolute; width: 260px; height: 260px; border-radius: 50%; background-color: var(--sun-circle); z-index: 1; transition: background-color 0.3s;"></div>
+          <img src="logo.png" alt="Logo" class="logo-image" style="position: relative; width: 200px; height: auto; display: block; z-index: 2;">
+      </div>
+
+      <div style="margin-top: 25px; width: 100%;">
+        <a href="#games-section" style="background-color: var(--card-inner-bg); color: var(--text-color); border: 1px solid var(--card-border); padding: 10px 0; width: 100%; border-radius: 50px; display: inline-block; text-decoration: none; font-weight: bold; font-size: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">ع</a>
+      </div>
+    </section>
+
+    <!-- 🌟 بطاقة عن اللعبة (تم تنزيلها بمسافة أكبر بكثير في الأعلى والأسفل) -->
+    <section id="about-section" style="position: relative; overflow: visible; background-color: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: 32px; padding: 60px 40px 50px 40px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); max-width: 900px; margin: 160px auto 260px auto; text-align: center; box-sizing: border-box; height: auto; display: flex; flex-direction: column; align-items: center;">
+      
+      <!-- 🖼️ صورة زاوية البطاقة (استبدل 'corner-icon.png' بمسار صورتك) -->
+      <img src="corner-icon.png" alt="زاوية البطاقة" style="position: absolute; top: -110px; left: -130px; width: 250px; height: 250px; object-fit: contain; pointer-events: none;" onerror="this.style.display='none'">
+      <img src="corner-icons.png" alt="زاوية البطاقة" style="position: absolute; top: 150px; left: 750px; width: 250px; height: 250px; object-fit: contain; pointer-events: none;" onerror="this.style.display='none'">
+
+      <!-- شريط العنوان العائم -->
+      <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); display: inline-block; background: var(--card-inner-bg); border: 1px solid var(--card-border); color: var(--text-color); padding: 14px 50px; border-radius: 50px; font-weight: 700; font-size: 22px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10;">
+        عن اللعبة
+      </div>
+
+      <!-- محتوى النصوص -->
+      <div style="display: flex; flex-direction: column; gap: 20px; width: 100%; margin-top: 15px; text-align: center;">
+        <p style="font-size: clamp(16px, 1.8vw, 20px); line-height: 1.8; margin: 0; color: var(--text-color);">
+          منصة ع هي منصة ألعاب تضم العديد من الألعاب الشهيرة والحصرية، وتقدم تجربة متنوعة تجمع بين الترفيه والإبداع في مكان واحد، والتي اصبحت شهيرة لدرجة ان المثل المعروف ( لأجل ع تكرم مدينة ) ظهر نسبةً إليها، واصبح هذا المثل جزءًا من عالم اللعبة وقصتها..
+        </p>
+        <p style="font-size: clamp(16px, 1.8vw, 20px); line-height: 1.8; margin: 0; color: var(--text-color);">
+          اسم «ع» مستوحى من اسم المبرمج عثمان، ليصبح جزءاً أساسياً من هوية المنصة.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- قسم الألعاب -->
+    <section id="games-section" style="position: relative; overflow: visible; background-color: var(--card-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid var(--card-border); border-radius: 32px; padding: 90px 25px 50px 25px; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); max-width: 900px; margin: 0 auto 100px auto; text-align: center; box-sizing: border-box; height: auto;">
+        
+      <div style="position: absolute; top: -30px; left: 50%; transform: translateX(-50%); display: inline-block; background: var(--card-inner-bg); border: 1px solid var(--card-border); color: var(--text-color); padding: 14px 60px; border-radius: 50px; font-weight: 700; font-size: 24px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 10;">
+        الألعاب
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; width: 100%; box-sizing: border-box; justify-items: center;">
+        
+        <div style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%;">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game1.PNG" alt="لعبة 1" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+        <div style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%;">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game1.PNG" alt="لعبة 2" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+        <!-- لعبة 3: حروف مع ع -->
+        <div id="haroofGameBtn" style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%; cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game3.PNG" alt="حروف مع عثمان" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+          <h3 style="color: var(--text-color); margin-top: 15px; margin-bottom: 0; font-size: 24px; font-weight: 700;">حروف مع عثمان</h3>
+        </div>
+
+        <div style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%;">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game1.PNG" alt="لعبة 4" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+        <div style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%;">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game1.PNG" alt="لعبة 5" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+        <div style="background: var(--card-inner-bg); border: 1px solid var(--card-border); border-radius: 22px; padding: 14px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.2); display: flex; flex-direction: column; height: 350px; width: 100%;">
+          <div style="width: 100%; height: 260px; border-radius: 16px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+            <img src="game1.PNG" alt="لعبة 6" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+
+<script>
+  const haroofGameBtn = document.getElementById('haroofGameBtn');
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+
+  // استرجاع النمط المحفوظ مسبقاً من المتصفح
+  if (localStorage.getItem('game_theme') === 'light') {
+    document.body.classList.add('light-mode');
+    themeToggleBtn.textContent = '☀️';
+  }
+
+  // تفعيل زر التبديل وحفظ الحالة
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('light-mode');
+      
+      if (document.body.classList.contains('light-mode')) {
+        themeToggleBtn.textContent = '☀️';
+        localStorage.setItem('game_theme', 'light');
+      } else {
+        themeToggleBtn.textContent = '🌙';
+        localStorage.setItem('game_theme', 'dark');
+      }
+    });
+  }
+
+  if (haroofGameBtn) {
+    haroofGameBtn.addEventListener('click', () => {
+      window.location.href = 'code_artifact.html';
+    });
+  }
+</script>
+</body>
+</html>
